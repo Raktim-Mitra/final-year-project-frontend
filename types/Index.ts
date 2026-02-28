@@ -8,7 +8,7 @@ export interface CourseOutcome {
 export interface Resource {
   id: string;
   title: string;
-  type: "video" | "article" | "book" | "interactive";
+  type: 'video' | 'article' | 'book' | 'interactive';
   source: string;
   url: string;
   duration?: string;
@@ -19,8 +19,8 @@ export interface Resource {
 export interface Question {
   id: string;
   question: string;
-  type: "mcq" | "short" | "calculation" | "descriptive";
-  difficulty: "Easy" | "Medium" | "Hard";
+  type: 'mcq' | 'short' | 'calculation' | 'descriptive';
+  difficulty: 'Easy' | 'Medium' | 'Hard';
   options?: string[];
   answer?: string;
 }
@@ -53,4 +53,4 @@ export interface SyllabusResult {
   questionCount: number;
 }
 
-export type TabType = "modules" | "outcomes" | "resources" | "questions";
+export type TabType = 'modules' | 'outcomes' | 'resources' | 'questions';

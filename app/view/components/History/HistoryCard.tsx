@@ -1,48 +1,55 @@
-import { ChevronRight, Calendar, ListChecks, MessageSquareQuote } from 'lucide-react';
+'use client';
+
+import { useRouter } from 'next/navigation';
+import { ChevronRight, Calendar, ListChecks, MessageSquareQuote, LayoutList } from 'lucide-react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 import { SyllabusResult } from '@/types/Index';
 
 interface HistoryCardProps {
   result: SyllabusResult;
-  onClick?: () => void;
 }
 
-export default function HistoryCard({ result, onClick }: HistoryCardProps) {
-  const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      month: 'short',
-      day: 'numeric',
-      year: 'numeric',
-    });
-  };
+export default function HistoryCard({ result }: HistoryCardProps) {
+  const router = useRouter();
+
+  const formatDate = (dateString: string) =>
+    new Date(dateString).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 
   return (
-    <button
-      onClick={onClick}
-      className="w-full text-left p-5 bg-white rounded-xl border-2 border-[#D9C4B0]/30 hover:border-[#5da8bd]/40 hover:shadow-lg transition-all group"
+    <Card
+      onClick={() => router.push(`/view/${result.id}`)}
+      className="cursor-pointer border-2 border-brand-accent/30 hover:border-brand-primary/40 hover:shadow-lg transition-all group"
     >
-      <div className="flex items-start justify-between mb-3">
-        <div>
-          <p className="text-xs text-gray-400 mb-1">{result.syllabusName}</p>
-          <h4 className="font-bold text-gray-900 group-hover:text-[#5da8bd] transition-colors">
-            {result.courseName}
-          </h4>
+      <CardContent className="p-5">
+        <div className="flex items-start justify-between mb-3">
+          <div>
+            <p className="text-xs text-muted-foreground mb-1">{result.syllabusName}</p>
+            <h4 className="font-bold text-foreground group-hover:text-brand-primary transition-colors">
+              {result.courseName}
+            </h4>
+          </div>
+          <ChevronRight className="w-5 h-5 text-muted-foreground/40 group-hover:text-brand-primary group-hover:translate-x-1 transition-all shrink-0" />
         </div>
-        <ChevronRight className="w-5 h-5 text-gray-300 group-hover:text-[#5da8bd] group-hover:translate-x-1 transition-all" />
-      </div>
-      <div className="flex items-center gap-4 text-xs text-gray-500">
-        <span className="flex items-center gap-1">
-          <Calendar className="w-3.5 h-3.5" />
-          {formatDate(result.uploadedAt)}
-        </span>
-        <span className="flex items-center gap-1">
-          <ListChecks className="w-3.5 h-3.5" />
-          {result.outcomeCount} outcomes
-        </span>
-        <span className="flex items-center gap-1">
-          <MessageSquareQuote className="w-3.5 h-3.5" />
-          {result.questionCount} questions
-        </span>
-      </div>
-    </button>
+        <div className="flex items-center gap-2 flex-wrap">
+          <Badge variant="outline" className="text-[11px] border-brand-accent/40 text-muted-foreground gap-1">
+            <Calendar className="w-3 h-3" />
+            {formatDate(result.uploadedAt)}
+          </Badge>
+          <Badge variant="outline" className="text-[11px] border-brand-accent/40 text-muted-foreground gap-1">
+            <LayoutList className="w-3 h-3" />
+            {result.moduleCount} modules
+          </Badge>
+          <Badge variant="outline" className="text-[11px] border-brand-accent/40 text-muted-foreground gap-1">
+            <ListChecks className="w-3 h-3" />
+            {result.outcomeCount} outcomes
+          </Badge>
+          <Badge variant="outline" className="text-[11px] border-brand-accent/40 text-muted-foreground gap-1">
+            <MessageSquareQuote className="w-3 h-3" />
+            {result.questionCount} Qs
+          </Badge>
+        </div>
+      </CardContent>
+    </Card>
   );
 }

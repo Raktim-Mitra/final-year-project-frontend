@@ -1,4 +1,6 @@
 import { ChevronRight } from 'lucide-react';
+import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
 
 interface ResultHeaderProps {
   syllabusName: string;
@@ -7,16 +9,20 @@ interface ResultHeaderProps {
 
 export default function ResultHeader({ syllabusName, courseName }: ResultHeaderProps) {
   return (
-    <div className="bg-white rounded-2xl shadow-lg border border-[#D9C4B0]/30 p-6 mb-6">
-      <div className="flex items-center gap-2 text-sm text-gray-400 mb-3">
-        <span>Current Result</span>
-        <ChevronRight className="w-4 h-4" />
-        <span className="text-gray-600">{syllabusName}</span>
-        <ChevronRight className="w-4 h-4" />
-        <span className="text-[#5da8bd] font-semibold">{courseName}</span>
-      </div>
-      <h2 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-2">{courseName}</h2>
-      <p className="text-gray-500">AI-generated course outcomes, curated resources, and practice questions</p>
-    </div>
+    <Card className="mb-6 border-brand-accent/30 shadow-lg">
+      <CardContent className="p-6">
+        <div className="flex items-center gap-2 text-sm text-muted-foreground mb-3 flex-wrap">
+          <Badge variant="outline" className="border-brand-accent/40">Result</Badge>
+          <ChevronRight className="w-4 h-4" />
+          <span>{syllabusName}</span>
+          <ChevronRight className="w-4 h-4" />
+          <span className="text-brand-primary font-semibold">{courseName}</span>
+        </div>
+        <h2 className="text-2xl lg:text-3xl font-bold text-foreground mb-2">{courseName}</h2>
+        <p className="text-muted-foreground">
+          AI-generated modules, course outcomes, curated resources, and practice questions
+        </p>
+      </CardContent>
+    </Card>
   );
 }

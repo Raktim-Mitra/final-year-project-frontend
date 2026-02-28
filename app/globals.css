@@ -13,6 +13,13 @@
   --color-accent-beige: #f2ede4;
   --color-accent-tan: #e8dfd0;
 
+  /* Brand Colors for View Pages */
+  --color-brand-primary: #5da8bd;
+  --color-brand-secondary: #BBDCE5;
+  --color-brand-accent: #D9C4B0;
+  --color-brand-bg: #ECEEDF;
+  --color-brand-text: #6b8288;
+
   /* Custom Fonts */
   --font-display: var(--font-inter), sans-serif;
 }

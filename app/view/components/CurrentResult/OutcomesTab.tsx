@@ -1,26 +1,19 @@
 'use client';
 
+import { Accordion } from '@/components/ui/accordion';
 import { CourseOutcome } from '@/types/Index';
 import OutcomeCard from '../ui/OutcomeCard';
 
 interface OutcomesTabProps {
   outcomes: CourseOutcome[];
-  expandedOutcomes: Set<string>;
-  onToggleOutcome: (id: string) => void;
 }
 
-export default function OutcomesTab({ outcomes, expandedOutcomes, onToggleOutcome }: OutcomesTabProps) {
+export default function OutcomesTab({ outcomes }: OutcomesTabProps) {
   return (
-    <div className="space-y-4">
+    <Accordion type="multiple" defaultValue={['LO1']} className="space-y-4">
       {outcomes.map((outcome, index) => (
-        <OutcomeCard
-          key={outcome.id}
-          outcome={outcome}
-          index={index}
-          isExpanded={expandedOutcomes.has(outcome.id)}
-          onToggle={() => onToggleOutcome(outcome.id)}
-        />
+        <OutcomeCard key={outcome.id} outcome={outcome} index={index} />
       ))}
-    </div>
+    </Accordion>
   );
 }
