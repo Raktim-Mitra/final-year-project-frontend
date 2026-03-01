@@ -3,11 +3,12 @@
 import { useRouter } from 'next/navigation';
 import { Sparkles } from 'lucide-react';
 import { Badge } from '@/components/ui/badge';
-import Header from './components/Header';
-import Footer from './components/Footer';
+
 import HistorySection from './components/History';
 import { currentResultId, historyResults } from '@/data/historyMockData';
 import { getResultById } from '@/data/mockData';
+import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 
 export default function ResultsPage() {
   const router = useRouter();
@@ -15,7 +16,7 @@ export default function ResultsPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-brand-bg via-white to-brand-secondary/20">
-      <Header />
+      <Navbar />
 
       <div className="max-w-6xl mx-auto px-6 py-8">
         {/* Latest Result Banner */}

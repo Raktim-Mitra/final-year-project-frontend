@@ -4,10 +4,11 @@ import { useParams, useRouter } from 'next/navigation';
 import { ArrowLeft } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import Header from '../components/Header';
-import Footer from '../components/Footer';
+
 import CurrentResult from '../components/CurrentResult';
 import { getResultById } from '@/data/mockData';
+import Navbar from '@/components/Navbar';
+import Footer from '@/components/Footer';
 
 export default function ResultViewPage() {
   const params = useParams();
@@ -19,7 +20,7 @@ export default function ResultViewPage() {
   if (!resultData) {
     return (
       <div className="min-h-screen bg-gradient-to-br from-brand-bg via-white to-brand-secondary/20">
-        <Header />
+        <Navbar />
         <div className="max-w-6xl mx-auto px-6 py-16 text-center">
           <Card className="border-brand-accent/30 shadow-lg">
             <CardContent className="p-12">
@@ -45,7 +46,7 @@ export default function ResultViewPage() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-brand-bg via-white to-brand-secondary/20">
-      <Header />
+      <Navbar />
 
       <div className="max-w-6xl mx-auto px-6 py-8">
         <Button
