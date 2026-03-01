@@ -4,6 +4,26 @@
 
 @custom-variant dark (&:is(.dark *));
 
+@theme {
+  /* Custom Colors */
+  --color-primary: #8fbbc7;
+  --color-background-light: #eceedf;
+  --color-background-dark: #1a1d1a;
+  --color-accent-blue: #d0e1e6;
+  --color-accent-beige: #f2ede4;
+  --color-accent-tan: #e8dfd0;
+
+  /* Brand Colors for View Pages */
+  --color-brand-primary: #5da8bd;
+  --color-brand-secondary: #BBDCE5;
+  --color-brand-accent: #D9C4B0;
+  --color-brand-bg: #ECEEDF;
+  --color-brand-text: #6b8288;
+
+  /* Custom Fonts */
+  --font-display: var(--font-inter), sans-serif;
+}
+
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
