@@ -2,43 +2,61 @@ import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
-import FileGrid from "../dashboard/components/FileGrid";
+import FileGrid from "./components/FileGrid";
+
+const API_BASE_URL = "http://localhost:5001";
 
 export default async function Dashboard() {
-  const { userId } = await auth();
+  const { userId, getToken } = await auth();
 
   if (!userId) redirect("/");
 
-  // Dummy files (replace with DB later)
-  const files = [
-    { id: "1", name: "Operating Systems", date: "12 Feb 2026" },
-    { id: "2", name: "Computer Networks", date: "15 Feb 2026" },
-    { id: "3", name: "DBMS", date: "18 Feb 2026" }
-  ];
+  const token = await getToken();
+
+  let files = [];
+
+  try {
+    const res = await fetch(`${API_BASE_URL}/api/user/files`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      cache: "no-store",
+    });
+
+    const data = await res.json();
+
+    if (data.success) {
+      files = data.files;
+    }
+
+  } catch {
+    files = [];
+  }
 
   return (
     <div className="min-h-screen bg-linear-to-br from-brand-bg via-white to-brand-secondary/30">
 
       <Navbar />
-       <main className="p-10 max-w-6xl mx-auto">
+
+      <main className="p-10 max-w-6xl mx-auto">
 
         {/* Header */}
         <div className="mb-10 flex items-start justify-between">
+          <div>
+            <h1 className="text-3xl font-bold text-gray-800">
+              Your Learning Space
+            </h1>
+            <p className="text-gray-500 mt-2">
+              Manage and explore your uploaded academic modules
+            </p>
+          </div>
 
-        <div>
-        <h1 className="text-3xl font-bold text-gray-800">
-            Your Learning Space
-         </h1>
-        <p className="text-gray-500 mt-2">
-            Manage and explore your uploaded academic modules
-        </p>
-       </div>
-        <a
-         href="/upload"
-         className="bg-[#42a8c5] text-white px-5 py-2 rounded-lg shadow hover:bg-[#44879c] transition"
-        >
-         Upload Syllabus
-        </a>
+          <a
+            href="/upload"
+            className="bg-[#42a8c5] text-white px-5 py-2 rounded-lg shadow hover:bg-[#44879c] transition"
+          >
+            Upload Syllabus
+          </a>
         </div>
 
         {/* Stats */}
@@ -54,7 +72,7 @@ export default async function Dashboard() {
           <div className="bg-white/80 p-6 rounded-xl shadow border">
             <h3 className="text-gray-500 text-sm">Recently Added</h3>
             <p className="text-lg font-semibold text-gray-700 mt-2">
-              {files[files.length - 1]?.name}
+              {files[files.length - 1]?.name || "—"}
             </p>
           </div>
 
@@ -70,6 +88,7 @@ export default async function Dashboard() {
         </div>
 
       </main>
+
       <Footer />
     </div>
   );

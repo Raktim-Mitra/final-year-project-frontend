@@ -13,12 +13,12 @@ import { Zap, CheckCircle, Users } from 'lucide-react';
 
 export default function Home() {
   return (
-    <div className="min-h-screen bg-linear-to-br from-[#ECEEDF] via-white to-[#BBDCE5]/30 overflow-hidden relative">
+    <div className="min-h-screen bg-linear-to-br from-brand-bg via-white to-brand-secondary/30 overflow-hidden relative">
 
       {/* Background */}
       <div className="absolute inset-0">
-        <div className="absolute top-20 left-10 w-72 h-72 bg-[#BBDCE5]/20 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-[#D9C4B0]/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute top-20 left-10 w-72 h-72 bg-brand-secondary/20 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-20 right-10 w-96 h-96 bg-brand-accent/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
       </div>
 
       <Navbar />
@@ -31,7 +31,7 @@ export default function Home() {
 
             <div>
               <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6 leading-tight">
-                Transform <span className="text-[#BBDCE5]">Academic Content</span>
+                Transform <span className="text-brand-secondary">Academic Content</span>
                 <br />
                 Into Smart <span className="text-[#CFAB8D]">Learning Modules</span>
               </h1>
@@ -88,9 +88,8 @@ export default function Home() {
 
             {/* HERO IMAGE */}
             <div className="relative h-96 rounded-2xl overflow-hidden shadow-2xl">
-              <Image src="/home.png" alt="AI Learning" fill className="object-cover" />
+              <Image src="/home.png" alt="AI Learning" fill sizes="(max-width: 768px) 100vw, 50vw" priority className="object-cover" />
             </div>
-
           </div>
 
           {/* FEATURES */}
