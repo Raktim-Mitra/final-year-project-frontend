@@ -15,7 +15,7 @@ export default function ResultsPage() {
   const currentData = getResultById(currentResultId);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-brand-bg via-white to-brand-secondary/20">
+    <div className="min-h-screen bg-linear-to-br from-brand-bg via-white to-brand-secondary/20">
       <Navbar />
 
       <div className="max-w-6xl mx-auto px-6 py-8">
@@ -25,7 +25,7 @@ export default function ResultsPage() {
             onClick={() => router.push(`/view/${currentResultId}`)}
             className="w-full mb-10 text-left group"
           >
-            <div className="relative overflow-hidden bg-gradient-to-r from-brand-primary to-brand-secondary rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all hover:-translate-y-0.5">
+            <div className="relative overflow-hidden bg-linear-to-r from-brand-primary to-brand-secondary rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all hover:-translate-y-0.5">
               <div className="absolute top-0 right-0 w-40 h-40 bg-white/10 rounded-full -translate-y-1/2 translate-x-1/2" />
               <div className="absolute bottom-0 left-20 w-24 h-24 bg-white/5 rounded-full translate-y-1/2" />
 

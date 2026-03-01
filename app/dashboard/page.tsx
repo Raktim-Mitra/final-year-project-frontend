@@ -1,10 +1,8 @@
 import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
-
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import FileGrid from "../dashboard/components/FileGrid";
-import FloatingUploadButton from "../dashboard/components/FloatingUploadButton";
 
 export default async function Dashboard() {
   const { userId } = await auth();
@@ -19,20 +17,28 @@ export default async function Dashboard() {
   ];
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-[#ECEEDF] via-white to-[#BBDCE5]/30">
+    <div className="min-h-screen bg-linear-to-br from-brand-bg via-white to-brand-secondary/30">
 
       <Navbar />
-
-      <main className="p-10 max-w-6xl mx-auto">
+       <main className="p-10 max-w-6xl mx-auto">
 
         {/* Header */}
-        <div className="mb-10">
-          <h1 className="text-3xl font-bold text-gray-800">
+        <div className="mb-10 flex items-start justify-between">
+
+        <div>
+        <h1 className="text-3xl font-bold text-gray-800">
             Your Learning Space
-          </h1>
-          <p className="text-gray-500 mt-2">
+         </h1>
+        <p className="text-gray-500 mt-2">
             Manage and explore your uploaded academic modules
-          </p>
+        </p>
+       </div>
+        <a
+         href="/upload"
+         className="bg-[#42a8c5] text-white px-5 py-2 rounded-lg shadow hover:bg-[#44879c] transition"
+        >
+         Upload Syllabus
+        </a>
         </div>
 
         {/* Stats */}
@@ -64,8 +70,6 @@ export default async function Dashboard() {
         </div>
 
       </main>
-
-      <FloatingUploadButton />
       <Footer />
     </div>
   );
