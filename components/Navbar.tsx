@@ -20,19 +20,37 @@ export default function Navbar() {
   useEffect(() => {
     if (!isSignedIn) return;
 
-    const sendToken = async () => {
+    const syncUser = async () => {
+
       const token = await getToken();
       if (!token) return;
 
-      await fetch("http://localhost:5000/api/user", {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        }
-      });
+      // Decode Clerk JWT to get userId
+      const payload = JSON.parse(atob(token.split(".")[1]));
+      const clerkUserId = payload.sub;
+
+      const storedUserId = localStorage.getItem("synced_user");
+
+      // Prevent duplicate sync
+      if (storedUserId === clerkUserId) return;
+
+      try {
+        await fetch("http://localhost:5001/api/user", {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          }
+        });
+
+        localStorage.setItem("synced_user", clerkUserId);
+
+      } catch {
+        console.error("User sync failed");
+      }
     };
 
-    sendToken();
+    syncUser();
+
   }, [getToken, isSignedIn]);
 
   return (
@@ -44,6 +62,7 @@ export default function Navbar() {
 
       <div className="flex items-center gap-4">
 
+        {/* Logged Out */}
         <SignedOut>
           <SignInButton mode="modal">
             <button className="text-gray-700 font-medium hover:text-[#8fbbc7] transition">
@@ -58,8 +77,11 @@ export default function Navbar() {
           </SignUpButton>
         </SignedOut>
 
+        {/* Logged In */}
         <SignedIn>
-          <UserButton afterSignOutUrl="/home" />
+          <UserButton
+            afterSignOutUrl="/home"
+          />
         </SignedIn>
 
       </div>
