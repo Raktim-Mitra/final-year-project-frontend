@@ -1,17 +1,18 @@
+"use client";
 import Navbar from '../../components/Navbar';
 import Footer from '../../components/Footer';
 import Image from 'next/image';
 import Link from 'next/link';
-import {
-  SignedIn,
-  SignedOut,
-  SignUpButton,
-  SignInButton,
-  UserButton
-} from "@clerk/nextjs";
+
 import { Zap, CheckCircle, Users } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import { useAuthStore } from '@/store/authStore';
 
 export default function Home() {
+  
+    const token = useAuthStore((state) => state.token);
+    // const hasHydrated = useAuthStore((state) => state.hasHydrated);
+    const clearSession = useAuthStore((state) => state.clearSession);
   return (
     <div className="min-h-screen bg-linear-to-br from-brand-bg via-white to-brand-secondary/30 overflow-hidden relative">
 
@@ -43,31 +44,22 @@ export default function Home() {
 
               {/* AUTH CTA */}
               <div className="flex items-center gap-4 mb-10">
-
-                <SignedOut>
-                  <SignUpButton mode="modal">
-                    <button className="bg-[#8fbbc7] text-white px-6 py-3 rounded-xl shadow hover:bg-[#79A9B7] transition">
-                      Get Started
-                    </button>
-                  </SignUpButton>
-
-                  <SignInButton mode="modal">
-                    <button className="border border-[#8fbbc7] text-[#8fbbc7] px-6 py-3 rounded-xl hover:bg-[#8fbbc7]/10 transition">
-                      Sign In
-                    </button>
-                  </SignInButton>
-                </SignedOut>
-
-                <SignedIn>
-                  <UserButton afterSignOutUrl="/" />
-
-                  <Link href="/dashboard">
-                    <button className="bg-[#CFAB8D] text-white px-6 py-3 rounded-xl shadow hover:bg-[#B89579] transition">
-                      Go to Dashboard
-                    </button>
-                  </Link>
-                </SignedIn>
-
+            
+        {token ?(
+          <Button >
+            <Link href="/dashboard" className="w-full h-full">Go to Dashboard</Link>
+          </Button>
+        ): (
+          <div className="flex items-center gap-4">
+            <Button asChild>
+              <Link href="/auth/signin">Sign In</Link>
+            </Button>
+            <Button  asChild>
+              <Link href="/auth/signup">Sign Up</Link>
+            </Button>
+          </div>
+        )}
+     
               </div>
 
               {/* BADGES */}

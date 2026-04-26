@@ -1,92 +1,91 @@
-import { auth } from "@clerk/nextjs/server";
-import { redirect } from "next/navigation";
+"use client";
+
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import FileGrid from "./components/FileGrid";
+import { useAuthStore } from "@/store/authStore";
 
 const API_BASE_URL = "http://localhost:5001";
 
-export default async function Dashboard() {
-  const { userId, getToken } = await auth();
+export default function Dashboard() {
+  const [files, setFiles] = useState([]);
+  const router = useRouter();
 
-  if (!userId) redirect("/");
+  const { token, hasHydrated } = useAuthStore();
 
-  const token = await getToken();
-
-  let files = [];
-
-  try {
-    const res = await fetch(`${API_BASE_URL}/api/user/files`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      cache: "no-store",
-    });
-
-    const data = await res.json();
-
-    if (data.success) {
-      files = data.files;
+  useEffect(() => {
+    if (!hasHydrated) return;
+    if (!token) {
+      router.push("/auth/signin");
+      return;
     }
 
-  } catch {
-    files = [];
-  }
+    const fetchFiles = async () => {
+      try {
+        const res = await fetch(`${API_BASE_URL}/api/user/files`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        const data = await res.json();
+
+        if (data.success) {
+          setFiles(data.files);
+        }
+      } catch {
+        setFiles([]);
+      }
+    };
+
+    fetchFiles();
+  }, [token, hasHydrated]);
+
+  if (!hasHydrated) return null;
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-brand-bg via-white to-brand-secondary/30">
-
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-slate-100">
       <Navbar />
 
-      <main className="p-10 max-w-6xl mx-auto">
-
+      <main className="p-8 max-w-6xl mx-auto">
         {/* Header */}
-        <div className="mb-10 flex items-start justify-between">
+        <div className="mb-10 flex items-center justify-between">
           <div>
             <h1 className="text-3xl font-bold text-gray-800">
               Your Learning Space
             </h1>
             <p className="text-gray-500 mt-2">
-              Manage and explore your uploaded academic modules
+              All your uploaded syllabi in one place
             </p>
           </div>
 
-          <a
-            href="/upload"
+          <button
+            onClick={() => router.push("/upload")}
             className="bg-[#42a8c5] text-white px-5 py-2 rounded-lg shadow hover:bg-[#44879c] transition"
           >
-            Upload Syllabus
-          </a>
+            + Upload
+          </button>
         </div>
 
-        {/* Stats */}
-        <div className="grid md:grid-cols-2 gap-6 mb-10">
-
-          <div className="bg-white/80 p-6 rounded-xl shadow border">
-            <h3 className="text-gray-500 text-sm">Total Files</h3>
-            <p className="text-3xl font-bold text-[#8fbbc7] mt-2">
-              {files.length}
+        {/* Empty State */}
+        {files.length === 0 && (
+          <div className="text-center py-20 bg-white rounded-xl border shadow-sm">
+            <p className="text-gray-500 mb-4">
+              No syllabi uploaded yet
             </p>
+            <button
+              onClick={() => router.push("/upload")}
+              className="bg-[#8fbbc7] text-white px-6 py-2 rounded-lg"
+            >
+              Upload your first syllabus
+            </button>
           </div>
+        )}
 
-          <div className="bg-white/80 p-6 rounded-xl shadow border">
-            <h3 className="text-gray-500 text-sm">Recently Added</h3>
-            <p className="text-lg font-semibold text-gray-700 mt-2">
-              {files[files.length - 1]?.name || "—"}
-            </p>
-          </div>
-
-        </div>
-
-        {/* File Section */}
-        <div>
-          <h2 className="text-xl font-semibold mb-6 text-gray-700">
-            Your Uploaded Files
-          </h2>
-
-          <FileGrid files={files} />
-        </div>
-
+        {/* Grid */}
+        {files.length > 0 && <FileGrid files={files} />}
       </main>
 
       <Footer />
