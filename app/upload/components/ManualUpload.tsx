@@ -42,7 +42,8 @@ export default function ManualUpload() {
 
       if (!res.ok) throw new Error(data.error || "Upload failed");
 
-      router.push("/dashboard");
+      // Pass the new file ID so dashboard only polls for this file
+      router.push(`/dashboard?pending=${data.syllabus_id}`);
     } catch (err) {
       console.error(err);
       alert("Upload failed");

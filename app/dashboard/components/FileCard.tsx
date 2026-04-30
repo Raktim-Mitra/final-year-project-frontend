@@ -36,12 +36,8 @@ export default function FileCard({ file }: { file: any }) {
 
       if (!res.ok) throw new Error(data.error);
 
-      // close dialog
       setOpen(false);
-
-      // refresh page (simple approach)
       window.location.reload();
-
     } catch (err) {
       console.error(err);
       alert("Delete failed");
@@ -71,7 +67,7 @@ export default function FileCard({ file }: { file: any }) {
                     : "bg-green-100 text-green-700"
                 }`}
               >
-                {isProcessing ? "Processing" : "Ready"}
+                {isProcessing ? "Processing" : "Completed"}
               </span>
             </div>
 
@@ -108,7 +104,6 @@ export default function FileCard({ file }: { file: any }) {
         </div>
       </div>
 
-      {/* Dialog */}
       <DeleteDialog
         open={open}
         onClose={() => setOpen(false)}
