@@ -4,6 +4,7 @@ export const detectGesture = async (imageData: string) => {
   const response = await fetch(`${API_BASE_URL}/api/gesture/detect`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
+    credentials: "include",
     body: JSON.stringify({ image: imageData }),
   });
 

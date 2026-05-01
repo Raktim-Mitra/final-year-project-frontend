@@ -51,7 +51,7 @@ export default function AuthForm({ type }: { type: "signin" | "signup" }) {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-50">
+    <div className="w-full flex items-center justify-center">
       <div className="w-full max-w-md bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
         <h2 className="text-2xl font-semibold mb-6 text-center">
           {isLogin ? "Sign In" : "Create Account"}
@@ -83,7 +83,7 @@ export default function AuthForm({ type }: { type: "signin" | "signup" }) {
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-slate-900 text-white py-3 rounded-lg hover:bg-slate-800 transition"
+            className="w-full bg-brand-primary text-white py-3 rounded-lg hover:bg-brand-primary/90 transition"
           >
             {loading
               ? "Please wait..."
@@ -96,7 +96,7 @@ export default function AuthForm({ type }: { type: "signin" | "signup" }) {
         <p className="text-sm text-center mt-6">
           {isLogin ? "Don't have an account?" : "Already have an account?"}{" "}
           <span
-            className="text-blue-600 cursor-pointer"
+            className="text-brand-primary cursor-pointer hover:underline"
             onClick={() => router.push(isLogin ? "/auth/signup" : "/auth/signin")}
           >
             {isLogin ? "Sign Up" : "Sign In"}

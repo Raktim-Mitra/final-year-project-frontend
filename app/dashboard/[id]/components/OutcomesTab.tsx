@@ -49,7 +49,7 @@ export default function OutcomesTab({ syllabusId }: { syllabusId: string }) {
                 {bullets.length > 0 ? (
                   bullets.map((bullet, idx) => (
                     <li key={idx} className="text-gray-700 text-sm leading-relaxed">
-                      • {bullet}
+                       {bullet}
                     </li>
                   ))
                 ) : (

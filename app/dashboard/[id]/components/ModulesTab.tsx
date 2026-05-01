@@ -1,4 +1,5 @@
 export default function ModulesTab({ modules }: { modules: any[] }) {
+  
   if (modules.length === 0) {
     return (
       <div className="text-center py-20 bg-white rounded-xl border shadow-sm">
